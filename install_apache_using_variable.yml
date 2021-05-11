@@ -19,7 +19,7 @@
       state: latest
   - name: copy content to web page
     copy:
-      content: "This is for web server testing"
+      content: "This is AWESOME web server test page"
       dest: /var/www/html/index.html
   - name: start webservice
     service:
