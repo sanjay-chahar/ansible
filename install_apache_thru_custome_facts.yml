@@ -1,4 +1,4 @@
-## install pache server from custom fact
+## install apache server from custom fact
 - name: install apache thru custome facts
   hosts: web
   become: yes
