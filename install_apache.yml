@@ -1,0 +1,16 @@
+- hosts: web
+  become: yes
+  tasks:
+  - name: Install httpd package
+    yum:
+        name: httpd
+        state: latest
+  - name: Enable and start httpd
+    service:
+        name: httpd
+        state: started
+        enabled: yes
+  - name: Create index.html file for content
+    copy:
+        content: "This is my first playbook"
+        dest: /var/www/html/index.html

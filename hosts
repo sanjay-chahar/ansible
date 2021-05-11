@@ -1,0 +1,15 @@
+centos-frontend-01
+centos-frontend-02
+ubuntudb-01
+ubuntudb-02
+
+
+[lb]
+centos-frontend-01
+
+[web]
+centos-frontend-02
+
+[db] 
+ubuntudb-01  
+ubuntudb-02   
