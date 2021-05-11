@@ -1,0 +1,41 @@
+#Install apache web server using varibale
+- name: install webserver
+  hosts: lb
+  become: yes
+  vars:
+    web_package: httpd
+    firewall_package: firewalld
+    web_service: httpd
+    firewall_service: firewalld 
+    python_pkg: python-httplib2
+    firewall_rule: http
+  tasks: 
+  - name: install webserver
+    yum:
+      name: 
+        - "{{ web_package }}" 
+        - "{{ firewall_package }}"
+        - "{{ python_pkg }}"
+      state: latest
+  - name: copy content to web page
+    copy:
+      content: "This is for web server testing"
+      dest: /var/www/html/index.html
+  - name: start webservice
+    service:
+      name: "{{ web_service }}"
+      state: started
+      enabled: yes
+  - name: start firewall service
+    service:
+      name: "{{ firewall_service }}"
+      state: started
+      enabled: yes
+  - name: open firewall port for webserver
+    firewalld:
+      service: "{{ firewall_rule }}"
+      permanent: true
+      immediate: true
+      state: enabled
+
+     
