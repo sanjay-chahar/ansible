@@ -2,7 +2,7 @@
       name: "{{ extra_packages }}"
 
   - copy:
-      src: /home/devops/lab2-files/my.cnf
+      src: /home/devops/ansible_implementation/my.cnf
       dest: "{{ configure_database_path }}"
       owner: mysql
       group: mysql
