@@ -1,0 +1,33 @@
+---
+- name: Ansible Variable Example Playbook
+  hosts: all
+  tasks:
+
+
+    # display the variable data type
+    - debug:
+        msg:
+          - " Data type of 'OS version'  is {{ ansible_distribution_version | type_debug }} "
+          - " Data type of 'OS' is {{ ansible_distribution | type_debug }} "
+          - " Data type of 'ansible_all_ipv4_addresses' is {{ ansible_all_ipv4_addresses | type_debug }} "
+          - " Data Type of 'System Memory' is {{ ansible_memory_mb.real.total | type_debug }} "
+
+    # Simply printing the value of fact which is Ansible UnSafe Text type
+    - debug:
+        msg: "{{ ansible_architecture }}"
+
+
+    # Display OS version
+    - debug:
+        msg: " 'OS Version' {{ansible_distribution_version}}"
+
+    # Display IP Address
+    - debug:
+        msg: " 'IP Address' {{ansible_all_ipv4_addresses}}"
+
+    # Display OS ditribution
+    - debug:
+        msg: " 'OS Distribution' {{ansible_distribution}}"
+    # List out system memory
+    - debug:
+        msg: " 'OS memory' {{ ansible_memory_mb.real.total }}"
