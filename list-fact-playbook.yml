@@ -5,12 +5,6 @@
 
 
     # display the variable data type
-    - debug:
-        msg:
-          - " Data type of 'OS version'  is {{ ansible_distribution_version | type_debug }} "
-          - " Data type of 'OS' is {{ ansible_distribution | type_debug }} "
-          - " Data type of 'ansible_all_ipv4_addresses' is {{ ansible_all_ipv4_addresses | type_debug }} "
-          - " Data Type of 'System Memory' is {{ ansible_memory_mb.real.total | type_debug }} "
 
     # Simply printing the value of fact which is Ansible UnSafe Text type
     - debug:
