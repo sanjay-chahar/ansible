@@ -1,0 +1,38 @@
+---
+- name: Installs the required rpm
+  yum:
+    name: "{{ item }}"
+  loop:
+    - "{{ web_package }}"
+    - "{{ ssl_package }}"
+  when:
+    - inventory_hostname in groups["web"]
+    - "{{ ansible_memory_mb.real.total }} > {{ memory }}"
+
+- name: Starts the service
+  service:
+    name: "{{ web_service }}"
+    state: started
+
+### copy configuration file
+- block:
+  - template:
+      src: "{{ https_src }}"
+      dest: /etc/httpd.conf.d/
+      force: yes
+## create remote file
+- file:
+    path: /var/www/html/logs
+    state: directroy
+    mode: 0755
+
+- file:
+    path: /etc/httpd/conf.d/ssl
+    state: directory
+    mode: 0755
+##Confirm file exist and capture output in variable
+- stat:
+    path: /etc/httpd/conf.d/ssl.conf
+ register: ssl_file
+     
+
