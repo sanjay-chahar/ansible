@@ -1,15 +1,16 @@
+##The failed_when variable uses the return code to override 
 ---
 - shell:
     rpm -q httpd
   register: rpm_check
   failed_when: rpm_check.rc == 1
-
+####Create the /var/www/html/logs remote directory with a mode of 0755
 - block:
   - template:
       src: "{{ https_src }}"
       dest: /etc/httpd/conf.d/
       force: yes
-
+###Confirm that the /etc/httpd/conf.d/ssl.conf file exists and capture the output in the ssl_file variable using the register statement:
   - file:
       path: /etc/httpd/conf.d/ssl
       state: directory
@@ -23,15 +24,18 @@
   - stat:
       path: /etc/httpd/conf.d/ssl.conf
     register: ssl_file
-
+##Renames the /etc/httpd/conf.d/ssl.conf file as /etc/httpd/conf.d/ssl.conf.bak after evaluating the content of the ssl_file 
   - shell:
       mv /etc/httpd/conf.d/ssl.conf /etc/httpd/conf.d/ssl.conf.bak
     when: ssl_file.stat.exists
-
-  - unarchive:
+# unarchive task not working and for test purpose I added copy
+#  - unarchive:
+#      src: "{{ ssl_src }}"
+#      dest: /etc/httpd/conf.d/ssl/
+#      copy: no
+  - copy: 
       src: "{{ ssl_src }}"
       dest: /etc/httpd/conf.d/ssl/
-      copy: no
     notify:
       - restart_services
 

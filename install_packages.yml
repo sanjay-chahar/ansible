@@ -8,6 +8,7 @@
   when:
     - inventory_hostname in groups["web"]
     - "{{ ansible_memory_mb.real.total }} > {{ memory }}"
+    #- "{{ ansible_memory_mb.real.total|int > {{ memory|int }}"
 - name: Starts the service
   service:
     name: "{{ web_service }}"

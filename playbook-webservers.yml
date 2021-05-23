@@ -1,4 +1,5 @@
-- hosts: web
+# Main block execute first and rescue block only execute if main block fail and always block execute every time as name mentioned
+- hosts: lb
   become: yes
   tasks:
     - block:
@@ -11,7 +12,8 @@
       - import_tasks: configure_web.yml
         vars:
           https_src: /home/devops/ansible_implementation/https.conf
-          ssl_src: /home/devops/ansible_implementation/ssl.tar.gz
+          ssl_src: /home/devops/ansible_implementation/ssl.conf.gz
+        tags: development
       - import_tasks: configure_firewall.yml
         vars:
           fw_package: firewalld
